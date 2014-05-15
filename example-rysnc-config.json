@@ -1,0 +1,18 @@
+{
+    "source":
+    {
+        "top-dir": "/data",
+        "dirs":
+        [
+            "/some/other/dir1",
+            "/some/other/dir2/"
+        ]
+    },
+
+    "destination":
+    {
+        "host": "my.server.com",
+        "user": "me",
+        "top-dir": "/data"
+    }
+}
