@@ -9,7 +9,7 @@ import os
 import subprocess
 import sys
 
-daqDir = os.environ['DAQSSN_SCRIPT_DIR']
+daqDir = os.environ['DAQSSNDIR']
 
 if len(sys.argv) == 1:
     print("Please supply a configuration file for the rsync mode")

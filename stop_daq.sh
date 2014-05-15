@@ -19,6 +19,4 @@ fi
 
 python switch_mode.py off
 
-unset DAQSSN_SCRIPT_DIR
-
 tmux kill-session -t ${SESSION}

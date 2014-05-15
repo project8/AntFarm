@@ -9,7 +9,7 @@ import os
 import subprocess
 import sys
 
-daqDir = os.environ['DAQSSN_SCRIPT_DIR']
+daqDir = os.environ['DAQSSNDIR']
 
 args = ['/usr/local/bin/mantis_server']
 if len(sys.argv) > 1:

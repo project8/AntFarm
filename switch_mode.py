@@ -24,7 +24,7 @@ if len(sys.argv) <= 1:
     print("Usage: switch_mode [mode] [optional args]")
     sys.exit(0)
 
-daqDir = os.environ['DAQSSN_SCRIPT_DIR']
+daqDir = os.environ['DAQSSNDIR']
 
 offMode = "off"
 acquireMode = "acquire"

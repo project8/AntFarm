@@ -11,7 +11,7 @@
 SESSION="daq"
 
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export DAQSSN_SCRIPT_DIR=${SCRIPTDIR}
+export DAQSSNDIR=${SCRIPTDIR}
 
 tmux has-session -t ${SESSION} &> /dev/null
 RETVAL=$?
