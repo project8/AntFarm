@@ -1,7 +1,6 @@
 {
     "source":
     {
-        "top-dir": "/data",
         "dirs":
         [
             "/some/other/dir1",
