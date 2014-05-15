@@ -2,15 +2,15 @@
 
 # Changes the DAQ operating mode
 #
-# Usage: switch_mode [mode] [optional args]
+# Usage: switch_mode [mode] [args]
 #
 # Modes and optional arguments:
 # - off
 #   - (none)
 # - acquire
-#   - all arguments will be passed to mantis_server
+#   - all arguments are optional and will be passed to mantis_server
 # - rsync
-#   - 
+#   - rsync config file (required)
 
 import io
 import json
@@ -77,8 +77,12 @@ if currentMode == acquireMode:
                 sys.exit(0)
 elif currentMode == rsyncMode:
     pid = statusData["pid"]
-    print("stopping rsync; killing process", pid)
-    #os.kill(pid, signal.SIGINT)
+    procDir = "/proc"/ + str(pid)
+    if not os.path.exists(procDir):
+        print("rsync process (pid: ", pid, ") is not running", sep='')
+    else:
+        print("stopping rsync; killing process", pid)
+        os.kill(pid, signal.SIGINT)
 
 with open(statusFilename, 'w') as statusFile:
     json.dump({"mode": offMode}, statusFile)
@@ -96,6 +100,9 @@ if modeRequest == acquireMode:
     args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
 elif modeRequest == rsyncMode:
-    print("Pretend I'm rsync'ing!")
-    with open(statusFilename, 'w') as statusFile:
-        json.dump({"mode": rsyncMode, "pid": -5}, statusFile)
+    if len(sys.argv) < 3:
+        print("Please provide an rsync configuration file")
+        sys.exit(0)
+    command = 'python ' + daqDir + '/start_rsync.py ' + sys.argv[2]
+    args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
+    proc = subprocess.Popen(args) # does not wait for return
