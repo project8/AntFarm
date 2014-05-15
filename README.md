@@ -11,19 +11,19 @@ The DAQ session environment consists of two terminal panes. The top pane is for 
 
 The session can be started with the `start_daq.sh` script:
 
-    > ./start_daq.sh
+    > /path/to/start_daq.sh
 
 If a DAQ session is already running, you can attach to it with the `attach_daq.sh` script:
 
-    > ./attach_daq.sh
+    > /path/to/attach_daq.sh
 
 To disconnect your client from the DAQ session, use the `detach_daq.sh` script:
 
-    > ./detach_daq.sh
+    > /path/to/detach_daq.sh
 
 And finally, to stop the DAQ session, use the `stop_daq.sh` script:
 
-    > ./stop_daq.sh
+    > /path/to/stop_daq.sh
 
 
 ### How to control the DAQ operation
@@ -35,14 +35,20 @@ There are three operating modes for the DAQ session:
 
 The script `switch_mode.py` should be used to change DAQ modes from the top pane of the DAQ session.
 
+In the top pane of the DAQ session, the directory containing the scripts is added to the path, so you can execute those scripts without specifying a path.
+
 To switch the DAQ mode to `off`:
 
-    > ./switch_mode.py off
+    > switch_mode.py off
 
 When switching the DAQ mode to `acquire`, you can optionally pass arguments to the `mantis_server`:
 
-    > ./switch_mode.py acquire [optional parameters for mantis_server]
+    > switch_mode.py acquire [optional parameters for mantis_server]
 
-When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the destination:
+When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the source and destination:
 
-    > ./switch_mode.py rsync [dest_info.json]
+    > switch_mode.py rsync [rsync_config.json]
+
+### Other notes
+
+* Two temporary files are created in the daq-session directory: `add_to_path.sh` and `status.json`. These should not be touched while a DAQ session is running.  Once the DAQ session is stopped, removing/modifying the files will have no effect.
