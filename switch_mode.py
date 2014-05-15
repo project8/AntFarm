@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # Changes the DAQ operating mode
 #
 # Usage: switch_mode [mode] [optional args]

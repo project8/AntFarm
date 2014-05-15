@@ -26,7 +26,7 @@ tmux -2 new-session -d -s ${SESSION}
 tmux new-window -t ${SESSION}:1
 tmux split-window -v -p 80
 tmux select-pane -t 0
-tmux send-keys "python switch_mode.py off" C-m
+tmux send-keys "${SCRIPTDIR}/switch_mode.py off" C-m
 tmux select-pane -t 0
 
 tmux -2 attach-session -t ${SESSION}

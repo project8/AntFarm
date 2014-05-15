@@ -37,14 +37,14 @@ The script `switch_mode.py` should be used to change DAQ modes from the top pane
 
 To switch the DAQ mode to `off`:
 
-    > python switch_mode.py off
+    > ./switch_mode.py off
 
 When switching the DAQ mode to `acquire`, you can optionally pass arguments to the `mantis_server`:
 
-    > python switch_mode.py acquire [optional parameters for mantis_server]
+    > ./switch_mode.py acquire [optional parameters for mantis_server]
 
 When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the destination:
 
-    > python switch_mode.py rsync [dest_info.json]
+    > ./switch_mode.py rsync [dest_info.json]
 
 Two helper scripts are used in addition to `swtich_mode.py`: `start_acquire.py` and `start_rsync.py`. These should not be used directly.
