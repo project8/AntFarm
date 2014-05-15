@@ -1,5 +1,6 @@
-# daq session status file
+# daq session temporary files
 status.json
+add_to_path.sh
 
 # emacs
 *~
