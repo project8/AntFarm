@@ -92,7 +92,7 @@ if modeRequest == offMode:
 if modeRequest == acquireMode:
     command = 'python ' + daqDir + '/start_acquire.py'
     if len(sys.argv) > 2:
-        command += " ".join(sys.argv[2:])
+        command += " " + " ".join(sys.argv[2:])
     args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
 elif modeRequest == rsyncMode:

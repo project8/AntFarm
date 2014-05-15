@@ -12,8 +12,8 @@ import sys
 daqDir = os.environ['DAQSSN_SCRIPT_DIR']
 
 args = ['/usr/local/bin/mantis_server']
-if len(sys.argv) > 2:
-    args.extend(sys.argv[2:])
+if len(sys.argv) > 1:
+    args.extend(sys.argv[1:])
 
 proc = subprocess.Popen(args)
 
