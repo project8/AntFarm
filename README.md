@@ -46,5 +46,3 @@ When switching the DAQ mode to `acquire`, you can optionally pass arguments to t
 When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the destination:
 
     > ./switch_mode.py rsync [dest_info.json]
-
-Two helper scripts are used in addition to `swtich_mode.py`: `start_acquire.py` and `start_rsync.py`. These should not be used directly.

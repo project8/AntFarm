@@ -94,7 +94,7 @@ if modeRequest == offMode:
 
 # start the new mode
 if modeRequest == acquireMode:
-    command = 'python ' + daqDir + '/start_acquire.py'
+    command = 'python ' + daqDir + '/internal/start_acquire.py'
     if len(sys.argv) > 2:
         command += " " + " ".join(sys.argv[2:])
     args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
@@ -103,6 +103,6 @@ elif modeRequest == rsyncMode:
     if len(sys.argv) < 3:
         print("Please provide an rsync configuration file")
         sys.exit(0)
-    command = 'python ' + daqDir + '/start_rsync.py ' + sys.argv[2]
+    command = 'python ' + daqDir + '/internal/start_rsync.py ' + sys.argv[2]
     args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
