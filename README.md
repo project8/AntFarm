@@ -45,9 +45,42 @@ When switching the DAQ mode to `acquire`, you can optionally pass arguments to t
 
     > switch_mode.py acquire [optional parameters for mantis_server]
 
-When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the source and destination:
+When switching the DAQ mode to `rsync`, you need to specify a json file with the information about the source and destination (see below):
 
     > switch_mode.py rsync [rsync_config.json]
+
+### rsync configuration
+
+When switching to rsync mode, a JSON-formatted configuration file must be supplied.  An example is provided in the `example` directory.  It consists of two main sections, `source` and `destination`.
+
+```json
+{
+    "source":
+    {
+        "dirs":
+        [
+            "/some/other/dir1",
+            "/some/other/dir2/"
+        ]
+    },
+```
+
+In the `source` section, the directories to be sycnronized with the destination are specified in an array. Using the standard from `rsync`, if a directory path ends with a forward slash (`/`), the contents of the directory will be copied to the `top-dir` of the destination; otherwise the directory itself (and its contents, of course) will be copied.
+
+```json
+    "destination":
+    {
+        "host": "my.server.com",
+        "user": "me",
+        "top-dir": "/data"
+    }
+}
+```
+
+In the `destination` section, there are three required components:
+* `host` is the server location,
+* `user` is the user that will be used to log into the host, and
+* `top-dir` is the directory into which everything from the `source` will be copied.
 
 ### Other notes
 
