@@ -97,12 +97,12 @@ if modeRequest == acquireMode:
     command = 'python ' + daqDir + '/internal/start_acquire.py'
     if len(sys.argv) > 2:
         command += " " + " ".join(sys.argv[2:])
-    args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
+    args = ['tmux', 'send-keys', '-t', 'daq:1.1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
 elif modeRequest == rsyncMode:
     if len(sys.argv) < 3:
         print("Please provide an rsync configuration file")
         sys.exit(0)
     command = 'python ' + daqDir + '/internal/start_rsync.py ' + sys.argv[2]
-    args = ['tmux', 'send-keys', '-t', '1', command, 'C-m']
+    args = ['tmux', 'send-keys', '-t', 'daq:1.1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
