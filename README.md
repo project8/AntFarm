@@ -85,3 +85,4 @@ In the `destination` section, there are three required components:
 ### Other notes
 
 * Two temporary files are created in the daq-session directory: `add_to_path.sh` and `status.json`. These should not be touched while a DAQ session is running.  Once the DAQ session is stopped, removing/modifying the files will have no effect.
+* If the json in status.json becomes malformed and errors are produced by the python scripts, reset everything by deleting `status.json`, and stopping mantis_server or rsync, if either is in progress.
