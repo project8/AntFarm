@@ -20,7 +20,7 @@ fi
 # Remove previous commented lines about added crontab files
 sed '/^#/d' <$TEMPCRONTAB >$NEWCRONTAB
 
-CRONTABLINE="* 6 * * * $SCRIPTFORCRON"
+CRONTABLINE="*/5 * * * * ${SCRIPTDIR}/$SCRIPTFORCRON"
 echo "$CRONTABLINE" >> $NEWCRONTAB
 
 # Put what's left back into cron
