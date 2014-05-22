@@ -22,6 +22,14 @@ if [ ${RETVAL} -eq 0 ]; then
     exit
 fi
 
+# Check/create the lock file
+LOCKFILENAME="${DAQSSNDIR}/daq.lock"
+if [ -e $LOCKFILENAME ]; then
+    echo "DAQ session lock exists; someone else must be doing something. Please try again later."
+    exit
+fi
+touch "$LOCKFILENAME"
+
 # Annoyingly, while the DAQSSNDIR variable will be visible from the session panes, 
 # I can't add it to the path from here in a way that is still there in the panes.
 # Instead, we'll create a temporary script and source it from the panes
@@ -38,6 +46,8 @@ tmux new-window -t ${SESSION}:1
 tmux split-window -v -p 80
 tmux select-pane -t ${SESSION}:1.0
 tmux send-keys "source ${ADDTOPATH}" C-m
+# Remove the lock so that we can call swithc_mode.py
+rm "$LOCKFILENAME"
 tmux send-keys "${DAQSSNDIR}/switch_mode.py off" C-m
 tmux select-pane -t ${SESSION}:1.0
 

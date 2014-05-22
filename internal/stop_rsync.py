@@ -17,10 +17,9 @@ if len(sys.argv) < 2:
     print("no pid was provided; aborting")
     sys.exit(1)
 
-pid = sys.argv[1]
+pid = int(sys.argv[1])
 
 # stop rsync
-pid = statusData["pid"]
 procDir = "/proc"/ + str(pid)
 if not os.path.exists(procDir):
     print("rsync process (pid: ", pid, ") is not running", sep='')
@@ -29,6 +28,7 @@ else:
     os.kill(pid, signal.SIGINT)
 
 # write the status file
+statusFilename = daqDir + "/status.json"
 with open(statusFilename, 'w') as statusFile:
-    json.dump({"mode": offMode}, statusFile)
+    json.dump({"mode": 'off'}, statusFile)
 

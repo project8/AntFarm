@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Set DAQSSNDIR properly if it's not already in the environment
-${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."}
+${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."} &> /dev/null
 
 # Get the directory in which the script is being run
 SCRIPTDIR="${DAQSSNDIR}/internal"

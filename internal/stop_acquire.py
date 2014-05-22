@@ -7,7 +7,8 @@
 
 import json
 import os
-import submodule
+import signal
+import subprocess
 import sys
 import time
 
@@ -17,10 +18,10 @@ if len(sys.argv) < 2:
     print("no pid was provided; aborting")
     sys.exit(1)
 
-pid = sys.argv[1]
+pid = int(sys.argv[1])
 
 # disable the check_mantis_idle cron job
-subprocess.Popen([daqDir + '/disable_enable_check_mantis_idle.sh'])
+subprocess.Popen([daqDir + '/internal/disable_check_mantis_idle.sh'])
 
 # stop acquisition
 procDir = "/proc/" + str(pid)
@@ -39,6 +40,7 @@ else:
             sys.exit(1)
 
 # write the status file
+statusFilename = daqDir + "/status.json"
 with open(statusFilename, 'w') as statusFile:
-    json.dump({"mode": offMode}, statusFile)
+    json.dump({"mode": 'off'}, statusFile)
 

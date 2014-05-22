@@ -15,16 +15,20 @@
 import io
 import json
 import os
-import signal
 import subprocess
 import sys
-import time
 
 if len(sys.argv) <= 1:
     print("Usage: switch_mode [mode] [optional args]")
     sys.exit(0)
 
 daqDir = os.environ['DAQSSNDIR']
+
+lockFilename = daqDir + '/daq.lock'
+if os.path.exists(lockFilename):
+    print("DAQ session lock exists; someone else must be doing something. Please try again later.")
+    sys.exit(0)
+open(lockFilename, 'a').close()
 
 offMode = "off"
 acquireMode = "acquire"
@@ -53,13 +57,14 @@ currentMode = statusData["mode"]
 # if we're already in the requested mode, exit
 if modeRequest == currentMode:
     print("DAQ system is already in mode <", currentMode, ">")
+    os.remove(lockFilename)
     sys.exit(0)
 
 # okay, so we're going to switch modes
 # first switch everything off
 
 if currentMode == acquireMode:
-    subprocess.call(['python', daqDir + '/internal/stop_acquire.py'])
+    subprocess.call(['python', daqDir + '/internal/stop_acquire.py', str(statusData['pid'])])
 elif currentMode == rsyncMode:
     subprocess.call(['python', daqDir + '/internal/stop_rsync.py'])
 
@@ -69,6 +74,7 @@ with open(statusFilename, 'w') as statusFile:
 print("Switching DAQ to mode <", modeRequest, ">")
 
 if modeRequest == offMode:
+    os.remove(lockFilename)
     sys.exit(0)
 
 # start the new mode
@@ -81,7 +87,10 @@ if modeRequest == acquireMode:
 elif modeRequest == rsyncMode:
     if len(sys.argv) < 3:
         print("Please provide an rsync configuration file")
+        os.remove(lockFilename)
         sys.exit(0)
     command = 'python ' + daqDir + '/internal/start_rsync.py ' + sys.argv[2]
     args = ['tmux', 'send-keys', '-t', 'daq:1.1', command, 'C-m']
     proc = subprocess.Popen(args) # does not wait for return
+
+os.remove(lockFilename)
