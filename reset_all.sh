@@ -9,7 +9,7 @@
 # Usage: > ./reset_all.sh
 
 # Set DAQSSNDIR properly if it's not already in the environment
-${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"}
+${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"} &> /dev/null
 
 # Call stop_daq.sh to shutdown the DAQ session
 ${DAQSSNDIR}/stop_daq.sh
@@ -25,6 +25,10 @@ ${DAQSSNDIR}/internal/disable_check_mantis_idle.sh
 # TODO: Should something be done about rsync, if it hapens to still be running?
 
 # If they're present, remove the files that are created by the DAQ session
+if [ -e "${DAQSSNDIR}/daq.lock" ]; then
+    rm "${DAQSSNDIR}/daq.lock"
+fi
+
 if [ -e "${DAQSSNDIR}/setup_daq_env.sh" ]; then
     rm "${DAQSSNDIR}/setup_daq_env.sh"
 fi
