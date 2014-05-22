@@ -58,31 +58,10 @@ if modeRequest == currentMode:
 # okay, so we're going to switch modes
 # first switch everything off
 
-# TODO: probably combine these if there's no difference in the action
 if currentMode == acquireMode:
-    pid = statusData["pid"]
-    procDir = "/proc/" + str(pid)
-    if not os.path.exists(procDir):
-        print("acquisition process (pid: ", pid, ") is not running", sep='')
-    else:
-        print("stopping acquisition; killing process", pid)
-        os.kill(pid, signal.SIGINT)
-        time.sleep(1) # wait for mantis to shut itself down
-        if os.path.exists(procDir):
-            print("process did not stop; killing more forcefully this time")
-            os.kill(pid, signal.SIGKILL)
-            time.sleep(0.5)
-            if os.path.exists(procDir):
-                print("apologies, but the acquisition can't be stopped! please help!")
-                sys.exit(0)
+    subprocess.call(['python', daqDir + '/internal/stop_acquire.py'])
 elif currentMode == rsyncMode:
-    pid = statusData["pid"]
-    procDir = "/proc"/ + str(pid)
-    if not os.path.exists(procDir):
-        print("rsync process (pid: ", pid, ") is not running", sep='')
-    else:
-        print("stopping rsync; killing process", pid)
-        os.kill(pid, signal.SIGINT)
+    subprocess.call(['python', daqDir + '/internal/stop_rsync.py'])
 
 with open(statusFilename, 'w') as statusFile:
     json.dump({"mode": offMode}, statusFile)

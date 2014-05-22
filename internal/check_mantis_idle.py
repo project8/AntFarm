@@ -1,5 +1,12 @@
 #!/usr/bin/python
-
+#
+# check_mantis_idle.py
+# Author: N. Oblath
+#
+# Internal script called by the cron job that's enabled during acquire mode.
+# Usage (by cron): check_mantis_idle.py [internal script directory]
+# daqDir is obtained from an argument rather than the environment, unlike in the other python scripts,
+# because this script is not being called from the DAQ session where DAQSSNDIR is an environment variable.
 
 
 import json
@@ -13,7 +20,7 @@ sameTimeCountKey = "same-time-count"
 # assuming we check every 5 minutes, after 6 checks we'll definitely be over 30 minutes
 sameTimeCountMax = 5
 
-daqDir = os.environ['DAQSSNDIR']
+daqDir = sys.argv[1] + "/.."
 
 # open/create the status file
 statusFilename = daqDir + "/status.json"
@@ -43,7 +50,8 @@ if "last-time" in statusData:
         timeCheckCount += 1
         print("timeCheckCount is now", timeCheckCount)
         if timeCheckCount > sameTimeCountMax:
-            proc = subprocess.Popen([daqDir + "/switch_mode.py", "rsync"])
+            subprocess.call(['source', daqDir + '/setup_daq_env.sh'])
+            proc = subprocess.call([daqDir + '/switch_mode.py', 'rsync'])
             sys.exit(0)
     else:
         timeCheckCount = 0

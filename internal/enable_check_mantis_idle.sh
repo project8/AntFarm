@@ -1,10 +1,13 @@
 #!/bin/sh
 
+# Set DAQSSNDIR properly if it's not already in the environment
+${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."}
+
 # Get the directory in which the script is being run
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPTDIR="$DAQSSNDIR/internal"
 
 # Make a filename for temporarily holding the entire crontab for the user
-TEMPCRONTAB="${SCRIPTDIR}/temp_crontab_for_enabling_check_mantis_idle.crontab"
+TEMPCRONTAB="${SCRIPTDIR}/temp_enable_cmi.crontab"
 NEWCRONTAB="${TEMPCRONTAB}.new"
 
 SCRIPTFORCRON="check_mantis_idle.py"
@@ -20,7 +23,7 @@ fi
 # Remove previous commented lines about added crontab files
 sed '/^#/d' <$TEMPCRONTAB >$NEWCRONTAB
 
-CRONTABLINE="*/5 * * * * ${SCRIPTDIR}/$SCRIPTFORCRON"
+CRONTABLINE="*/5 * * * * ${SCRIPTDIR}/$SCRIPTFORCRON ${DAQSSNDIR}"
 echo "$CRONTABLINE" >> $NEWCRONTAB
 
 # Put what's left back into cron

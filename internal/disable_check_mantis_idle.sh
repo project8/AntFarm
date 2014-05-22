@@ -1,10 +1,13 @@
 #!/bin/sh
 
+# Set DAQSSNDIR properly if it's not already in the environment
+${DAQSSNDIR:="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."}
+
 # Get the directory in which the script is being run
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPTDIR="${DAQSSNDIR}/internal"
 
 # Make a filename for temporarily holding the entire crontab for the user
-TEMPCRONTAB="${SCRIPTDIR}/temp_crontab_for_disabling_check_mantis_idle.crontab"
+TEMPCRONTAB="${SCRIPTDIR}/temp_disable_cmi.crontab"
 NEWCRONTAB="$TEMPCRONTAB.new"
 
 # List the crontab contents into the temporary file

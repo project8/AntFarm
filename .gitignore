@@ -1,6 +1,6 @@
 # daq session temporary files
 status.json
-add_to_path.sh
+setup_daq_env.sh
 
 # emacs
 *~
