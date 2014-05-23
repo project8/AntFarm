@@ -1,6 +1,6 @@
-## daq-session
+## AntFarm
 
-This repository consists of two main components:
+This repository provides and environment for running the Project 8 data acquisition.  It consists of two main components:
 * Bash scripts to access the DAQ session
 * Python scripts to control the modes of DAQ operation
 
