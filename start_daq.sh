@@ -46,6 +46,7 @@ tmux new-window -t ${SESSION}:1
 tmux split-window -v -p 80
 tmux select-pane -t ${SESSION}:1.0
 tmux send-keys "source ${ADDTOPATH}" C-m
+tmux send-keys "export ISDAQSSN=1" C-m
 # Remove the lock so that we can call swithc_mode.py
 rm "$LOCKFILENAME"
 tmux send-keys "${DAQSSNDIR}/switch_mode.py off" C-m

@@ -35,9 +35,17 @@ if [ -e $LOCKFILENAME ]; then
     exit
 fi
 
-
 # Switch the DAQ mode to off
-tmux send-keys -t ${SESSION}:1.0 "${DAQSSNDIR}/switch_mode.py off" C-m
+if [ -n "$ISDAQSSN" ]; then
+    # command given from within the DAQ session
+    switch_mode.py off
+else
+    # command given from outside the DAQ session
+    tmux send-keys -t ${SESSION}:1.0 "${DAQSSNDIR}/switch_mode.py off" C-m
+fi
+
+# Wait for the session to end
+sleep 2
 
 # Close the tmux session
 tmux kill-session -t ${SESSION}
